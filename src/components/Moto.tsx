@@ -3,19 +3,19 @@ import { motion } from 'framer-motion';
 
 export default function Moto() {
   return (
-    <section id="moto" className="min-h-[90vh] bg-[#c6c2b6] py-32 px-4 sm:px-8 flex items-center justify-center relative overflow-hidden">
+    <section id="moto" className="min-h-[90vh] bg-[#c6c2b6] py-32 px-8 md:px-16 flex items-center justify-center relative overflow-hidden">
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 1, ease: "easeOut" }}
-        className="relative group max-w-6xl w-full mx-auto"
+        className="relative group max-w-5xl w-full mx-auto"
       >
-        {/* Outer diffuse glow that expands on hover */}
-        <div className="absolute -inset-4 sm:-inset-6 rounded-[3rem] sm:rounded-[4rem] bg-gradient-to-r from-gray-400 via-[#c6c2b6] to-gray-500 opacity-0 group-hover:opacity-60 blur-2xl transition duration-1000"></div>
+        {/* Outer diffuse glow that is always visible */}
+        <div className="absolute -inset-4 sm:-inset-6 rounded-[3rem] sm:rounded-[4rem] bg-white opacity-30 group-hover:opacity-60 blur-2xl transition duration-1000"></div>
         
         {/* Sharp Border Glow */}
-        <div className="absolute -inset-[2px] rounded-[2.5rem] sm:rounded-[3.5rem] bg-gradient-to-br from-white/10 via-white/30 to-black/40 opacity-70 group-hover:opacity-100 transition duration-700"></div>
+        <div className="absolute -inset-[3px] rounded-[2.5rem] sm:rounded-[3.5rem] bg-white opacity-80 group-hover:opacity-100 transition duration-700 shadow-[0_0_20px_rgba(255,255,255,0.7)]"></div>
         
         {/* Main content background */}
         <div className="relative bg-[#1f2022] rounded-[2.5rem] sm:rounded-[3.5rem] p-10 sm:p-20 md:p-32 shadow-2xl flex flex-col items-center justify-center text-center overflow-hidden">
