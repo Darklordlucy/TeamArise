@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import "./globals.css";
-import { Teko, Inter } from "next/font/google";
+import { Inter } from "next/font/google";
 
-const teko = Teko({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"], variable: "--font-teko" });
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
@@ -17,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`h-full antialiased ${teko.variable} ${inter.variable}`}>
+    <html lang="en" className={`h-full antialiased ${inter.variable}`}>
       <body className="min-h-full flex flex-col relative">
         <Navbar />
         {children}

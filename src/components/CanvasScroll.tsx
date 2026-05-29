@@ -115,7 +115,7 @@ export default function CanvasScroll() {
           {/* Bottom Right Content */}
           <div className="absolute bottom-12 right-12 z-50 w-1/2 flex flex-col items-end text-right">
             <h1 className="text-7xl md:text-[100px] lg:text-[130px] font-extrabold tracking-tighter text-black/90 leading-[0.9]">
-              Team Arise
+              Team<br />Arise
             </h1>
             <p className="text-2xl md:text-4xl font-medium text-black/60 mt-4 tracking-tight">
               " Where winning is everything"
