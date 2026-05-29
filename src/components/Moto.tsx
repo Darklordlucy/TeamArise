@@ -15,11 +15,41 @@ const generateParticles = (count: number) => {
       x: x * 100, // percentage
       y: y * 100, // percentage
       delay: normalizedDelay,
-      size: Math.random() * 6 + 2, // 2px to 8px
-      color: Math.random() > 0.5 ? '#000000' : (Math.random() > 0.5 ? '#555555' : '#c6c2b6'),
+      size: Math.random() * 5 + 2, // 2px to 7px
+      color: Math.random() > 0.4 ? '#ff4500' : (Math.random() > 0.5 ? '#ffa500' : '#222222'),
     };
   });
 };
+
+// Render a single particle so hooks are called at the component level
+function Particle({ p, scrollYProgress }: { p: any, scrollYProgress: any }) {
+  const startTrigger = 0.1 + (p.delay * 0.6); // mapped to 0.1 - 0.7
+  const endTrigger = startTrigger + 0.15;
+  
+  const xMove = useTransform(scrollYProgress, [startTrigger, endTrigger], [0, -150 - (Math.random() * 200)]); // fly left
+  const yMove = useTransform(scrollYProgress, [startTrigger, endTrigger], [0, -200 - (Math.random() * 200)]); // fly up
+  const pOpacity = useTransform(scrollYProgress, [startTrigger, startTrigger + 0.05, endTrigger], [0, 1, 0]); // fade in then out quickly
+  const scale = useTransform(scrollYProgress, [startTrigger, endTrigger], [1, 0]);
+
+  return (
+    <motion.div
+      style={{
+        position: 'absolute',
+        left: `${p.x}%`,
+        top: `${p.y}%`,
+        width: p.size,
+        height: p.size,
+        backgroundColor: p.color,
+        borderRadius: '50%',
+        opacity: pOpacity,
+        x: xMove,
+        y: yMove,
+        scale
+      }}
+      className="shadow-sm"
+    />
+  );
+}
 
 export default function Moto() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -35,9 +65,10 @@ export default function Moto() {
   });
 
   // The card reveals from scroll progress 0.2 to 0.8
-  // mask percent goes from -20 to 120
-  const maskPercent = useTransform(scrollYProgress, [0.1, 0.8], [-20, 120]);
-  const maskImage = useMotionTemplate`linear-gradient(to top left, transparent ${maskPercent}%, black calc(${maskPercent}% + 15%))`;
+  // mask percent goes from -10 to 110
+  const maskPercent = useTransform(scrollYProgress, [0.1, 0.8], [-10, 110]);
+  const maskImage = useMotionTemplate`linear-gradient(to top left, transparent ${maskPercent}%, black calc(${maskPercent}% + 4%))`;
+  const burnEdge = useMotionTemplate`linear-gradient(to top left, transparent ${maskPercent}%, #ff4500 calc(${maskPercent}% + 1%), #ffaa00 calc(${maskPercent}% + 2%), transparent calc(${maskPercent}% + 5%))`;
 
   return (
     <section ref={containerRef} id="moto" className="h-[300vh] bg-[#c6c2b6] relative">
@@ -72,43 +103,21 @@ export default function Moto() {
             <p className="text-white/60 text-lg sm:text-2xl font-medium max-w-4xl leading-relaxed relative z-10">
               We don't just build software. We craft elite digital experiences designed to dominate the market and captivate users at first glance. Excellence isn't an option—it's our standard.
             </p>
+
+            {/* Fiery Burn Edge Overlay */}
+            <motion.div 
+              style={{ backgroundImage: burnEdge }} 
+              className="absolute inset-0 z-50 pointer-events-none mix-blend-screen opacity-90 blur-[2px]"
+            ></motion.div>
           </div>
         </motion.div>
 
         {/* Ash Particles overlay */}
         <div className="absolute inset-0 pointer-events-none max-w-7xl w-full mx-auto px-8 md:px-16 flex items-center justify-center h-screen">
           <div className="relative w-full h-[60vh]">
-            {particles.map((p) => {
-              // The particle should start moving when scroll progress hits its delay.
-              // Its specific scroll trigger is between `startTrigger` and `startTrigger + 0.1`
-              const startTrigger = 0.1 + (p.delay * 0.6); // mapped to 0.1 - 0.7
-              const endTrigger = startTrigger + 0.15;
-              
-              const xMove = useTransform(scrollYProgress, [startTrigger, endTrigger], [0, -150 - (Math.random() * 200)]); // fly left
-              const yMove = useTransform(scrollYProgress, [startTrigger, endTrigger], [0, -200 - (Math.random() * 200)]); // fly up
-              const pOpacity = useTransform(scrollYProgress, [startTrigger, startTrigger + 0.05, endTrigger], [0, 1, 0]); // fade in then out quickly
-              const scale = useTransform(scrollYProgress, [startTrigger, endTrigger], [1, 0]);
-
-              return (
-                <motion.div
-                  key={p.id}
-                  style={{
-                    position: 'absolute',
-                    left: `${p.x}%`,
-                    top: `${p.y}%`,
-                    width: p.size,
-                    height: p.size,
-                    backgroundColor: p.color,
-                    borderRadius: '50%',
-                    opacity: pOpacity,
-                    x: xMove,
-                    y: yMove,
-                    scale
-                  }}
-                  className="shadow-sm"
-                />
-              );
-            })}
+            {particles.map((p) => (
+              <Particle key={p.id} p={p} scrollYProgress={scrollYProgress} />
+            ))}
           </div>
         </div>
 
