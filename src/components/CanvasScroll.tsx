@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { useScroll, useTransform, motion } from 'framer-motion';
+import { useScroll, useTransform, useSpring, motion } from 'framer-motion';
 
-const FRAME_COUNT = 50;
+const FRAME_COUNT = 271;
 
 export default function CanvasScroll() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -17,7 +17,13 @@ export default function CanvasScroll() {
     offset: ["start start", "end end"]
   });
 
-  const frameIndex = useTransform(scrollYProgress, [0, 1], [0, FRAME_COUNT - 1]);
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
+  const frameIndex = useTransform(smoothProgress, [0, 1], [0, FRAME_COUNT - 1]);
 
   useEffect(() => {
     // Preload all images
