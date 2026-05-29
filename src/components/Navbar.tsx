@@ -25,7 +25,8 @@ export default function Navbar() {
     <header className="fixed top-0 left-0 right-0 z-50 px-8 pt-6 pb-4 flex items-center justify-between w-full">
       {/* Brand Name */}
       <div className="flex items-center h-[52px]">
-        <span className="text-xl font-bold tracking-tight text-black/90">Team Arise</span>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/logo.png" alt="Team Arise Logo" className="h-10 w-auto object-contain" />
       </div>
 
       {/* Glass Navbar */}
