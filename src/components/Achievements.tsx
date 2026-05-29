@@ -7,12 +7,14 @@ const achievements = [
     title: "First Hackathon Victory",
     date: "Late 2023",
     description: "Secured first place in our debut hackathon by building a high-performance web application under extreme time constraints.",
+    dotColor: "bg-gradient-to-br from-yellow-300 to-yellow-500 border-black shadow-[0_0_15px_rgba(250,204,21,0.5)]",
   },
   {
     id: 2,
     title: "Innovation Award",
     date: "Early 2024",
     description: "Won our second major hackathon, recognized specifically for exceptional UI/UX design and creative problem solving.",
+    dotColor: "bg-gradient-to-br from-gray-200 to-gray-400 border-black shadow-[0_0_15px_rgba(156,163,175,0.5)]",
   }
 ];
 
@@ -27,7 +29,7 @@ export default function Achievements() {
 
         <div className="relative">
           {/* Timeline Center Line */}
-          <div className="absolute left-1/2 top-0 bottom-0 w-[2px] bg-black/10 transform -translate-x-1/2 hidden md:block rounded-full"></div>
+          <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-black/15 transform -translate-x-1/2 hidden md:block rounded-full"></div>
 
           <div className="flex flex-col gap-16 md:gap-24 relative z-10">
             {achievements.map((achievement, index) => {
@@ -47,7 +49,7 @@ export default function Achievements() {
                       initial={{ scale: 0 }}
                       whileInView={{ scale: 1 }}
                       viewport={{ once: true, margin: "-100px" }}
-                      className="w-5 h-5 rounded-full bg-[#2C2D2E] border-4 border-[#c6c2b6] shadow-md z-10"
+                      className={`w-7 h-7 rounded-full border-4 shadow-md z-10 ${achievement.dotColor}`}
                     ></motion.div>
                   </div>
 
