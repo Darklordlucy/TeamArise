@@ -1,5 +1,6 @@
 'use client';
-import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 const achievements = [
   {
@@ -19,13 +20,29 @@ const achievements = [
 ];
 
 export default function Achievements() {
+  const headerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: headerRef,
+    offset: ["start center", "end start"]
+  });
+
+  // Fade out to 0 opacity as the element scrolls from the center of the viewport to the top.
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
+
   return (
-    <section id="achievements" className="min-h-screen bg-[#c6c2b6] py-32 px-8 relative">
+    <section id="achievements" className="min-h-screen bg-[#c6c2b6] py-32 px-8 relative overflow-hidden">
       <div className="max-w-[1200px] mx-auto w-full relative">
-        <div className="text-center mb-24">
+        <motion.div 
+          ref={headerRef} 
+          style={{ opacity, y }}
+          className="text-center mb-24 relative z-20"
+        >
            <p className="text-lg font-semibold tracking-widest text-black/60 mb-4 uppercase">Our Journey</p>
-           <h2 className="text-5xl md:text-6xl font-bold tracking-tight text-black/90">Achievements</h2>
-        </div>
+           <h2 className="text-7xl md:text-[150px] font-extrabold tracking-tighter text-black/90 leading-none">
+             Achievements
+           </h2>
+        </motion.div>
 
         <div className="relative">
           {/* Timeline Center Line */}

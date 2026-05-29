@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import CanvasScroll from "@/components/CanvasScroll";
 import Team from "@/components/Team";
 import Achievements from "@/components/Achievements";
+import Projects from "@/components/Projects";
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
       <CanvasScroll />
       <Team />
       <Achievements />
+      <Projects />
     </main>
   );
 }
