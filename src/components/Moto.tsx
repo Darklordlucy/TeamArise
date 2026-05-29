@@ -85,7 +85,7 @@ export default function Moto() {
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[150%] h-[500px] bg-gradient-to-b from-white/20 to-transparent opacity-60 blur-3xl rounded-[100%] pointer-events-none"></div>
 
             <p className="text-black/50 tracking-widest uppercase font-bold text-sm md:text-lg mb-6 relative z-10">
-              The Moto
+              Team Arise
             </p>
 
             <h2 className="text-5xl sm:text-7xl lg:text-[100px] font-extrabold text-black/90 tracking-tighter leading-[1.05] mb-8 relative z-10 w-full max-w-5xl">
