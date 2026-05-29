@@ -107,7 +107,7 @@ function TeamCard({ member }: { member: any }) {
 
 export default function Team() {
   return (
-    <section id="members" className="min-h-screen bg-[#c6c2b6] py-32 px-8 flex items-start">
+    <section id="members" className="bg-[#c6c2b6] pt-32 pb-0 px-8 flex items-start w-full">
       <div className="max-w-[1600px] mx-auto w-full grid grid-cols-1 lg:grid-cols-3 gap-16 lg:gap-20 items-start">
         
         {/* Left Side: Text (1 part) */}
