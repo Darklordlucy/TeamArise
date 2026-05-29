@@ -1,99 +1,161 @@
 'use client';
-import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef, useEffect, useState } from 'react';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 
 const achievements = [
   {
     id: 1,
-    title: "First Hackathon Victory",
-    date: "Late 2023",
-    description: "Secured first place in our debut hackathon by building a high-performance web application under extreme time constraints.",
-    dotColor: "bg-gradient-to-br from-yellow-300 to-yellow-500 border-black shadow-[0_0_15px_rgba(250,204,21,0.5)]",
+    title: "Techithon - 26",
+    date: "28-Jan-26",
+    location: "Atharva University, Mumbai",
+    position: "2nd Place (Fintech)",
+    prize: "15,000",
   },
   {
     id: 2,
-    title: "Innovation Award",
-    date: "Early 2024",
-    description: "Won our second major hackathon, recognized specifically for exceptional UI/UX design and creative problem solving.",
-    dotColor: "bg-gradient-to-br from-gray-200 to-gray-400 border-black shadow-[0_0_15px_rgba(156,163,175,0.5)]",
+    title: "Nexus-2.0",
+    date: "25-Apr-26",
+    location: "IIIT Pune, Pune",
+    position: "1st Place",
+    prize: "14,000",
   }
 ];
 
 export default function Achievements() {
-  const headerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [radius, setRadius] = useState(400);
+
+  useEffect(() => {
+    const updateRadius = () => {
+      setRadius(window.innerWidth < 768 ? 200 : 400);
+    };
+    updateRadius();
+    window.addEventListener('resize', updateRadius);
+    return () => window.removeEventListener('resize', updateRadius);
+  }, []);
+
   const { scrollYProgress } = useScroll({
-    target: headerRef,
-    offset: ["start center", "end start"]
+    target: containerRef,
+    offset: ["start start", "end end"]
   });
 
-  // Fade out to 0 opacity as the element scrolls from the center of the viewport to the top.
-  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
-  const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
+  // Rotate the wheel horizontally as the user scrolls (1 full rotation)
+  const wheelRotation = useTransform(smoothProgress, [0, 1], [0, -360]);
+  const numItems = achievements.length;
 
   return (
-    <section id="achievements" className="bg-[#c6c2b6] pt-24 pb-0 px-8 relative overflow-hidden w-full">
-      <div className="max-w-[1200px] mx-auto w-full relative">
-        <motion.div 
-          ref={headerRef} 
-          style={{ opacity, y }}
-          className="text-center mb-24 relative z-20"
-        >
-           <p className="text-lg font-semibold tracking-widest text-black/60 mb-4 uppercase">Our Journey</p>
-           <h2 className="text-7xl md:text-[150px] font-extrabold tracking-tighter text-black/90 leading-none">
+    <section id="achievements" ref={containerRef} className="bg-[#c6c2b6] relative w-full h-[400vh]">
+      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col perspective-[1200px]">
+        
+        {/* Header */}
+        <div className="w-full text-center py-12 md:py-16 shrink-0 z-20 relative">
+           <p className="text-lg font-semibold tracking-widest text-black/60 mb-2 md:mb-4 uppercase">Our Journey</p>
+           <h2 className="text-6xl md:text-[100px] lg:text-[150px] font-extrabold tracking-tighter text-black/90 leading-none">
              Achievements
            </h2>
-        </motion.div>
+        </div>
 
-        <div className="relative">
-          {/* Timeline Center Line */}
-          <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-black/15 transform -translate-x-1/2 hidden md:block rounded-full"></div>
-
-          <div className="flex flex-col gap-16 md:gap-24 relative z-10">
+        {/* 3D Horizontal Carousel */}
+        <div className="flex-1 w-full relative flex items-center justify-center pb-12" style={{ perspective: '1200px' }}>
+          <motion.div 
+            style={{ 
+              rotateY: wheelRotation,
+              transformStyle: "preserve-3d"
+            }}
+            className="relative w-full max-w-5xl mx-auto flex items-center justify-center"
+          >
             {achievements.map((achievement, index) => {
-              // First achievement on the right, so if index is 0 -> right side.
-              // That means left is empty, right is content.
-              const isRightSide = index % 2 === 0;
+              const angle = (360 / numItems) * index;
               
+              const counterRotation = useTransform(wheelRotation, (val) => -val - angle);
+
+              const opacity = useTransform(wheelRotation, (val) => {
+                const currentAngle = (val + angle) % 360;
+                const normalizedAngle = currentAngle < 0 ? currentAngle + 360 : currentAngle;
+                const dist = Math.min(normalizedAngle, 360 - normalizedAngle);
+                
+                if (dist < 60) return 1;
+                if (dist > 120) return 0;
+                return 1 - ((dist - 60) / 60);
+              });
+              
+              const scale = useTransform(wheelRotation, (val) => {
+                const currentAngle = (val + angle) % 360;
+                const normalizedAngle = currentAngle < 0 ? currentAngle + 360 : currentAngle;
+                const dist = Math.min(normalizedAngle, 360 - normalizedAngle);
+                
+                return 1 - (dist / 180) * 0.3;
+              });
+
               return (
-                <div key={achievement.id} className={`flex flex-col md:flex-row items-center justify-between w-full ${!isRightSide ? 'md:flex-row-reverse' : ''}`}>
-                  
-                  {/* Empty Space for the opposite side */}
-                  <div className="hidden md:block md:w-5/12"></div>
-
-                  {/* Timeline Dot */}
-                  <div className="hidden md:flex w-2/12 justify-center relative">
-                    <motion.div 
-                      initial={{ scale: 0 }}
-                      whileInView={{ scale: 1 }}
-                      viewport={{ once: true, margin: "-100px" }}
-                      className={`w-7 h-7 rounded-full border-4 shadow-md z-10 ${achievement.dotColor}`}
-                    ></motion.div>
-                  </div>
-
-                  {/* Content Card */}
+                <div 
+                  key={achievement.id} 
+                  className="absolute flex justify-center"
+                  style={{
+                    transform: `rotateY(${angle}deg) translateZ(${radius}px)`,
+                    transformStyle: "preserve-3d"
+                  }}
+                >
                   <motion.div 
-                    initial={{ opacity: 0, x: isRightSide ? 50 : -50 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
-                    className="w-full md:w-5/12"
+                    style={{ 
+                      rotateY: counterRotation,
+                      opacity: opacity,
+                      scale: scale
+                    }}
+                    className="w-[280px] sm:w-[340px] md:w-[380px]"
                   >
-                    <div className="bg-[#2C2D2E] rounded-3xl p-8 sm:p-10 shadow-xl border border-white/5 relative group hover:-translate-y-2 transition-transform duration-300">
-                      {/* Triangle pointer for desktop */}
-                      <div className={`hidden md:block absolute top-1/2 -translate-y-1/2 w-0 h-0 border-y-8 border-y-transparent ${isRightSide ? '-left-4 border-r-[16px] border-r-[#2C2D2E]' : '-right-4 border-l-[16px] border-l-[#2C2D2E]'}`}></div>
+                    {/* Minimal Black & White Card Design */}
+                    <div className="bg-[#1e1f22] rounded-3xl overflow-hidden shadow-2xl border border-white/5 relative group transition-all duration-300 hover:border-white/20 hover:shadow-[0_0_40px_rgba(0,0,0,0.5)]">
                       
-                      <span className="text-sm font-bold text-white/40 tracking-widest uppercase mb-3 block">{achievement.date}</span>
-                      <h3 className="text-2xl sm:text-3xl font-bold text-white/90 mb-4 tracking-tight">{achievement.title}</h3>
-                      <p className="text-white/60 leading-relaxed font-medium text-base sm:text-lg">
-                        {achievement.description}
-                      </p>
+                      {/* Top Accent Line - White */}
+                      <div className="absolute top-0 left-0 w-full h-[4px] bg-white/20"></div>
+
+                      <div className="p-6 sm:p-8 flex flex-col items-start text-left h-full">
+                        
+                        {/* Header: Date & Position Badge */}
+                        <div className="w-full flex justify-between items-start mb-5">
+                          <span className="text-xs font-bold text-white/50 tracking-widest uppercase bg-white/5 px-3 py-1.5 rounded-full border border-white/10">
+                            {achievement.date}
+                          </span>
+                          <span className="text-xs font-bold text-white/80 bg-white/10 px-3 py-1.5 rounded-full border border-white/20 shadow-sm">
+                            {achievement.position}
+                          </span>
+                        </div>
+                        
+                        {/* Title */}
+                        <h3 className="text-2xl sm:text-3xl font-extrabold text-white/95 mb-3 tracking-tight leading-tight">
+                          {achievement.title}
+                        </h3>
+                        
+                        {/* Location */}
+                        <div className="flex items-center gap-2 mb-8 text-white/60">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-white/40"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                          <span className="text-sm font-medium">{achievement.location}</span>
+                        </div>
+
+                        {/* Highlighted Prize Money - Pure White */}
+                        <div className="w-full mt-auto pt-5 border-t border-white/10">
+                          <p className="text-[10px] sm:text-xs font-bold text-white/40 uppercase tracking-widest mb-1">Prize Money</p>
+                          <div className="flex items-center gap-1">
+                            <span className="text-4xl sm:text-5xl font-black text-white tracking-tighter drop-shadow-md">
+                              ₹{achievement.prize}
+                            </span>
+                          </div>
+                        </div>
+
+                      </div>
                     </div>
                   </motion.div>
-                  
                 </div>
               );
             })}
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

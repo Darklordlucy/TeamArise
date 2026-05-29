@@ -5,42 +5,42 @@ import { motion } from 'framer-motion';
 
 const teamMembers = [
   {
-    id: 4,
+    id: 1,
     name: "Uallas Reddy",
-    role: "Creative Developer",
-    description: "Specializes in WebGL, Three.js and high-performance animations.",
+    role: "AI ML Engineer",
+    description: "Specializes in AI workflows, system designing, and backend engineering.",
     image: "/team/Uallas Reddy.png",
-    skills: ["WebGL", "Three.js", "GLSL", "React Three Fiber", "Performance Optimization"],
+    skills: ["Supervised learning", "UnSupervised learning", "ANN", "CNN", "AI workflows", "System designing", "LLMs", "Backend Engineering"],
     github: "https://github.com/Darklordlucy",
     linkedin: "https://www.linkedin.com/in/uallasreddy"
   },
   {
-    id: 3,
+    id: 2,
     name: "Saideep Paladi",
-    role: "Lead Designer",
-    description: "Creating award-winning digital experiences since 2012.",
+    role: "IOT and embedding system",
+    description: "Hardware architecture designer and Python/Linux expert.",
     image: "/team/Saideep Paladi.png",
-    skills: ["UI/UX Design", "Figma", "Prototyping", "Design Systems", "Interaction Design"],
+    skills: ["pythonist", "Linux operator", "TCP", "IP", "Hardware artitecture designer"],
     github: "https://github.com/Saideep72",
     linkedin: "https://www.linkedin.com/in/saideep-paladi/"
   },
   {
-    id: 1,
+    id: 3,
     name: "Aadesh Singh",
-    role: "Engineering Manager",
-    description: "Lead engineering teams at Figma, Pitch, and Protocol Labs.",
+    role: "ML engineer",
+    description: "Expert in deep learning, neural networks, and RAG.",
     image: "/team/Aadesh Singh.png",
-    skills: ["React", "TypeScript", "Node.js", "System Architecture", "Team Leadership"],
+    skills: ["Supervised learning", "UnSupervised learning", "ANN", "CNN", "RAG"],
     github: "https://github.com/Aadeshsingh-11",
     linkedin: "https://www.linkedin.com/in/aadeshsingh11/"
   },
   {
-    id: 2,
+    id: 4,
     name: "Anushka Prayagkar",
-    role: "Product Manager",
-    description: "Former PM for Airtable, Medium, Ghost, and Lumi.",
+    role: "Web designer",
+    description: "Crafting beautiful UI and integrating APIs efficiently.",
     image: "/team/Anushka Prayagkar.png",
-    skills: ["Product Strategy", "Agile", "User Research", "Roadmapping", "Data Analysis"],
+    skills: ["Javascript", "react", "Figma", "API Integration"],
     github: "https://github.com/Anushka-prayagkar",
     linkedin: "https://www.linkedin.com/in/anushka-prayagkar/"
   }

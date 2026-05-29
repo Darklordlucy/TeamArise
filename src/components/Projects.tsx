@@ -5,31 +5,24 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 const projects = [
   {
     id: 1,
-    title: "TasteSkill Framework",
-    category: "Web Architecture",
-    description: "An anti-slop frontend framework for AI agents ensuring pristine and scalable code generation.",
+    title: "CredBud",
+    category: "Fintech ML",
+    description: "An adaptive credit decisioning system that empowers underbanked users with ML-powered loan approval predictions using UPI transactions, assets, and debt analysis – moving beyond traditional credit scores.",
     color: "bg-[#2C2D2E]"
   },
   {
     id: 2,
-    title: "Crimson Plume",
-    category: "Creative Storytelling",
-    description: "High-end scrollytelling landing page pushing the boundaries of web animation and visual design.",
+    title: "Argus",
+    category: "AI Optimization",
+    description: "AI-powered route optimization system that prioritizes safety over speed using real-time hazard detection, live conditions, and intelligent pathfinding.",
     color: "bg-[#1f2022]"
   },
   {
     id: 3,
-    title: "Nexus Dashboard",
-    category: "UI/UX Design",
-    description: "A comprehensive data visualization dashboard handling massive real-time data streams with elegance.",
+    title: "ConvoAI",
+    category: "Healthcare AI",
+    description: "An AI healthcare assistant that converts doctor–patient conversations into structured medical insights, automated reminders, smart medication tracking, follow-up scheduling, and personalized care guidance in real time.",
     color: "bg-[#3a3b3d]"
-  },
-  {
-    id: 4,
-    title: "Aura Mobile",
-    category: "Mobile Application",
-    description: "Award-winning iOS and Android application with fluid gesture-based interactions and sleek minimalism.",
-    color: "bg-[#18191a]"
   }
 ];
 
