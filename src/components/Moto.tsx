@@ -85,10 +85,13 @@ export default function Moto() {
           {/* Sharp Border Glow */}
           <div className="absolute -inset-[3px] rounded-[2.5rem] sm:rounded-[3.5rem] bg-white opacity-100 transition duration-700 shadow-[0_0_40px_rgba(255,255,255,1)]"></div>
           
-          {/* Main content background */}
-          <div className="relative bg-[#1f2022] rounded-[2.5rem] sm:rounded-[3.5rem] py-16 px-8 md:py-24 md:px-16 shadow-2xl flex flex-col items-center justify-center text-center overflow-hidden">
+          {/* Main content background - TRUE GLASSMORPHISM */}
+          <div className="relative bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-2xl border border-white/30 rounded-[2.5rem] sm:rounded-[3.5rem] py-16 px-8 md:py-24 md:px-16 shadow-[0_8px_32px_rgba(0,0,0,0.1)] flex flex-col items-center justify-center text-center overflow-hidden">
             
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[150%] h-[500px] bg-gradient-to-b from-white/5 to-transparent opacity-50 blur-3xl rounded-[100%] pointer-events-none"></div>
+            {/* Glass reflection / shine across the top */}
+            <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent"></div>
+            
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[150%] h-[500px] bg-gradient-to-b from-white/20 to-transparent opacity-60 blur-3xl rounded-[100%] pointer-events-none"></div>
 
             <p className="text-white/40 tracking-widest uppercase font-bold text-sm md:text-lg mb-6 relative z-10">
               The Moto

@@ -37,8 +37,8 @@ export default function Navbar() {
             onClick={(e) => handleScroll(e, link.id)}
             className={`px-5 py-2 rounded-full transition-all duration-300 ${
               active === link.id
-                ? 'bg-[#c6c2b6] text-black shadow-sm'
-                : 'text-black/70 hover:bg-[#c6c2b6]/60 hover:text-black'
+                ? 'bg-black/15 text-black shadow-sm'
+                : 'text-black/70 hover:bg-black/5 hover:text-black'
             }`}
           >
             {link.name}
