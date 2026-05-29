@@ -12,7 +12,10 @@ export default function CanvasScroll() {
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [loadProgress, setLoadProgress] = useState(0);
 
-  const { scrollYProgress } = useScroll();
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
 
   const frameIndex = useTransform(scrollYProgress, [0, 1], [0, FRAME_COUNT - 1]);
 
@@ -96,28 +99,26 @@ export default function CanvasScroll() {
     };
   }, [imagesLoaded, images, frameIndex]);
 
-  if (!imagesLoaded) {
-    return (
-      <div className="fixed inset-0 flex flex-col items-center justify-center bg-[#c6c2b6]">
-        <div className="w-16 h-16 border-4 border-black/10 border-t-black/90 rounded-full animate-spin"></div>
-        <p className="mt-4 text-black/60 font-medium tracking-wide">
-          Loading Cinematic... {loadProgress}%
-        </p>
-      </div>
-    );
-  }
-
   return (
-    <div ref={containerRef} className="h-[400vh] relative bg-[#c6c2b6]">
-      <div className="sticky top-0 h-screen w-full overflow-hidden">
-        <canvas ref={canvasRef} className="w-full h-full block" />
-        
-        {/* Bottom Right Content */}
-        <div className="absolute bottom-8 right-8 z-50 flex flex-col items-end text-right">
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-black/90">Team Arise</h1>
-          <p className="text-lg md:text-xl font-medium text-black/60 mt-1">" Where winning is everything"</p>
+    <div ref={containerRef} className={`${imagesLoaded ? 'h-[400vh]' : 'h-screen'} relative bg-[#c6c2b6]`}>
+      {!imagesLoaded ? (
+        <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center bg-[#c6c2b6] z-50">
+          <div className="w-16 h-16 border-4 border-black/10 border-t-black/90 rounded-full animate-spin"></div>
+          <p className="mt-4 text-black/60 font-medium tracking-wide">
+            Loading Cinematic... {loadProgress}%
+          </p>
         </div>
-      </div>
+      ) : (
+        <div className="sticky top-0 h-screen w-full overflow-hidden">
+          <canvas ref={canvasRef} className="w-full h-full block" />
+          
+          {/* Bottom Right Content */}
+          <div className="absolute bottom-8 right-8 z-50 flex flex-col items-end text-right">
+            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-black/90">Team Arise</h1>
+            <p className="text-lg md:text-xl font-medium text-black/60 mt-1">" Where winning is everything"</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
