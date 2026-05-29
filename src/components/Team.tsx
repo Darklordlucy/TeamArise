@@ -107,11 +107,11 @@ function TeamCard({ member }: { member: any }) {
 
 export default function Team() {
   return (
-    <section className="min-h-screen bg-[#c6c2b6] py-32 px-8 flex items-center">
-      <div className="max-w-[1600px] mx-auto w-full grid grid-cols-1 lg:grid-cols-3 gap-16 lg:gap-20 items-center">
+    <section className="min-h-screen bg-[#c6c2b6] py-32 px-8 flex items-start">
+      <div className="max-w-[1600px] mx-auto w-full grid grid-cols-1 lg:grid-cols-3 gap-16 lg:gap-20 items-start">
         
         {/* Left Side: Text (1 part) */}
-        <div className="flex flex-col justify-center lg:col-span-1 pl-4 lg:pl-8">
+        <div className="flex flex-col justify-start lg:col-span-1 pl-4 lg:pl-8 sticky top-32">
           <p className="text-lg font-semibold tracking-widest text-black/60 mb-4 uppercase">The team</p>
           <h2 className="text-5xl md:text-6xl font-bold tracking-tight text-black/90 mb-8 leading-[1.1]">
             A small team with impressive cred.
