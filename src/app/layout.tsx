@@ -6,8 +6,8 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: "Crimson Plume - Scrollytelling",
-  description: "High-end scrollytelling landing page for Crimson Plume.",
+  title: "TeamArise",
+  description: "High-end cinematic scrollytelling site for TeamArise.",
 };
 
 export default function RootLayout({
