@@ -16,7 +16,7 @@ const generateParticles = (count: number) => {
       y: y * 100, // percentage
       delay: normalizedDelay,
       size: Math.random() * 5 + 2, // 2px to 7px
-      color: Math.random() > 0.4 ? '#ff4500' : (Math.random() > 0.5 ? '#ffa500' : '#222222'),
+      color: Math.random() > 0.5 ? '#000000' : (Math.random() > 0.5 ? '#222222' : '#111111'),
     };
   });
 };
@@ -68,7 +68,7 @@ export default function Moto() {
   // mask percent goes from -10 to 110
   const maskPercent = useTransform(scrollYProgress, [0.1, 0.8], [-10, 110]);
   const maskImage = useMotionTemplate`linear-gradient(to top left, transparent ${maskPercent}%, black calc(${maskPercent}% + 4%))`;
-  const burnEdge = useMotionTemplate`linear-gradient(to top left, transparent ${maskPercent}%, #ff4500 calc(${maskPercent}% + 1%), #ffaa00 calc(${maskPercent}% + 2%), transparent calc(${maskPercent}% + 5%))`;
+  const burnEdge = useMotionTemplate`linear-gradient(to top left, transparent ${maskPercent}%, #000000 calc(${maskPercent}% + 1%), #222222 calc(${maskPercent}% + 2%), transparent calc(${maskPercent}% + 5%))`;
 
   return (
     <section ref={containerRef} id="moto" className="h-[300vh] bg-[#c6c2b6] relative">
@@ -79,31 +79,22 @@ export default function Moto() {
           style={{ WebkitMaskImage: maskImage, maskImage }}
           className="relative group max-w-7xl w-full mx-auto"
         >
-          {/* Outer diffuse glow */}
-          <div className="absolute -inset-4 sm:-inset-6 rounded-[3rem] sm:rounded-[4rem] bg-white opacity-50 blur-3xl transition duration-1000"></div>
-          
-          {/* Sharp Border Glow */}
-          <div className="absolute -inset-[3px] rounded-[2.5rem] sm:rounded-[3.5rem] bg-white opacity-100 transition duration-700 shadow-[0_0_40px_rgba(255,255,255,1)]"></div>
-          
-          {/* Main content background - TRUE GLASSMORPHISM */}
-          <div className="relative bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-2xl border border-white/30 rounded-[2.5rem] sm:rounded-[3.5rem] py-16 px-8 md:py-24 md:px-16 shadow-[0_8px_32px_rgba(0,0,0,0.1)] flex flex-col items-center justify-center text-center overflow-hidden">
-            
-            {/* Glass reflection / shine across the top */}
-            <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/60 to-transparent"></div>
+          {/* Main content background - NO BACKGROUND */}
+          <div className="relative bg-transparent py-16 px-8 md:py-24 md:px-16 flex flex-col items-center justify-center text-center overflow-hidden z-10">
             
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[150%] h-[500px] bg-gradient-to-b from-white/20 to-transparent opacity-60 blur-3xl rounded-[100%] pointer-events-none"></div>
 
-            <p className="text-white/40 tracking-widest uppercase font-bold text-sm md:text-lg mb-6 relative z-10">
+            <p className="text-black/50 tracking-widest uppercase font-bold text-sm md:text-lg mb-6 relative z-10">
               The Moto
             </p>
             
-            <h2 className="text-5xl sm:text-7xl lg:text-[100px] font-extrabold text-white/90 tracking-tighter leading-[1.05] mb-8 relative z-10 w-full max-w-5xl">
+            <h2 className="text-5xl sm:text-7xl lg:text-[100px] font-extrabold text-black/90 tracking-tighter leading-[1.05] mb-8 relative z-10 w-full max-w-5xl">
               "Where winning is everything"
             </h2>
             
-            <div className="w-24 h-1 bg-gradient-to-r from-transparent via-white/30 to-transparent rounded-full mb-12 relative z-10"></div>
+            <div className="w-24 h-1 bg-gradient-to-r from-transparent via-black/30 to-transparent rounded-full mb-12 relative z-10"></div>
             
-            <p className="text-white/60 text-lg sm:text-2xl font-medium max-w-4xl leading-relaxed relative z-10">
+            <p className="text-black/70 text-lg sm:text-2xl font-medium max-w-4xl leading-relaxed relative z-10">
               We don't just build software. We craft elite digital experiences designed to dominate the market and captivate users at first glance. Excellence isn't an option—it's our standard.
             </p>
 
