@@ -66,8 +66,8 @@ function TeamCard({ member }: { member: any }) {
             <div className="w-10 h-10 bg-[#353638] rounded-xl flex items-center justify-center mb-4 sm:mb-8 border border-white/5 shadow-sm">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-white/70"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
             </div>
-            <h3 className="text-xl font-semibold tracking-tight text-white/90 truncate w-full">{member.name}</h3>
-            <p className="text-sm text-white/40 mb-3 truncate w-full">{member.role}</p>
+            <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white/95 truncate w-full mb-1">{member.name}</h3>
+            <p className="text-base sm:text-lg text-white/50 mb-3 truncate w-full font-medium">{member.role}</p>
             
             <div className="flex gap-5 mt-auto">
               <a href={member.github} target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white transition-colors" onClick={(e) => e.stopPropagation()}>

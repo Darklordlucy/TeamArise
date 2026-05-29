@@ -26,44 +26,88 @@ export default function CanvasScroll() {
   const frameIndex = useTransform(smoothProgress, [0, 1], [0, FRAME_COUNT - 1]);
 
   useEffect(() => {
-    const loadImages = () => {
+    let active = true;
+
+    const loadImages = async () => {
       // Create a fixed-size array to hold images as they load
       const loadedImages: HTMLImageElement[] = new Array(FRAME_COUNT);
-      let loadedCount = 0;
-      let hasUnblocked = false;
+      if (!active) return;
+      setImages(loadedImages);
 
-      setImages(loadedImages); // Set reference immediately
+      // 1. Explicitly load the first frame to unblock the UI instantly
+      const loadFirstFrame = () => {
+        return new Promise<void>((resolve) => {
+          const img = new Image();
+          img.src = '/frames/ezgif-frame-001.jpg';
+          img.onload = () => {
+            if (!active) {
+              resolve();
+              return;
+            }
+            loadedImages[0] = img;
+            setImagesLoaded(true);
+            setLoadProgress(Math.round((1 / FRAME_COUNT) * 100));
+            resolve();
+          };
+          img.onerror = () => {
+            if (!active) {
+              resolve();
+              return;
+            }
+            // Even on error, unblock the UI so the user can interact
+            setImagesLoaded(true);
+            resolve();
+          };
+        });
+      };
 
-      // Dispatch all image load requests concurrently (parallel loading)
-      Array.from({ length: FRAME_COUNT }).forEach((_, i) => {
-        const img = new Image();
-        const frameNum = String(i + 1).padStart(3, '0');
-        img.src = `/frames/ezgif-frame-${frameNum}.jpg`;
-        
-        img.onload = () => {
-          loadedImages[i] = img;
-          loadedCount++;
-          setLoadProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
-          
-          // Unblock the UI as soon as the first frame is ready
-          if (loadedImages[0] && !hasUnblocked) {
-            hasUnblocked = true;
-            setImagesLoaded(true);
-          }
-        };
-        
-        img.onerror = () => {
-          loadedCount++;
-          setLoadProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
-          if (i === 0 && !hasUnblocked) {
-            hasUnblocked = true;
-            setImagesLoaded(true);
-          }
-        };
-      });
+      await loadFirstFrame();
+      if (!active) return;
+
+      // 2. Load the remaining frames in a controlled background queue (concurrency limit of 6)
+      // This prevents browser network starvation and keeps the channel free for other critical assets.
+      const CONCURRENCY = 6;
+      let nextIndex = 1; // start from second frame (index 1)
+      let loadedCount = 1;
+
+      const worker = async () => {
+        while (active && nextIndex < FRAME_COUNT) {
+          const index = nextIndex++;
+          if (index >= FRAME_COUNT) break;
+
+          await new Promise<void>((resolve) => {
+            const img = new Image();
+            const frameNum = String(index + 1).padStart(3, '0');
+            img.src = `/frames/ezgif-frame-${frameNum}.jpg`;
+            img.onload = () => {
+              if (active) {
+                loadedImages[index] = img;
+                loadedCount++;
+                setLoadProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
+              }
+              resolve();
+            };
+            img.onerror = () => {
+              if (active) {
+                loadedCount++;
+                setLoadProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
+              }
+              resolve();
+            };
+          });
+        }
+      };
+
+      // Spawn parallel worker queues
+      const workers = Array.from({ length: CONCURRENCY }, () => worker());
+      await Promise.all(workers);
     };
 
     loadImages();
+
+    return () => {
+      active = false;
+    };
   }, []);
 
   useEffect(() => {
