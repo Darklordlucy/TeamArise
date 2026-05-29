@@ -25,7 +25,7 @@ const generateParticles = (count: number) => {
 function Particle({ p, scrollYProgress }: { p: any, scrollYProgress: any }) {
   const startTrigger = 0.1 + (p.delay * 0.6); // mapped to 0.1 - 0.7
   const endTrigger = startTrigger + 0.15;
-  
+
   const xMove = useTransform(scrollYProgress, [startTrigger, endTrigger], [0, -150 - (Math.random() * 200)]); // fly left
   const yMove = useTransform(scrollYProgress, [startTrigger, endTrigger], [0, -200 - (Math.random() * 200)]); // fly up
   const pOpacity = useTransform(scrollYProgress, [startTrigger, startTrigger + 0.05, endTrigger], [0, 1, 0]); // fade in then out quickly
@@ -73,34 +73,34 @@ export default function Moto() {
   return (
     <section ref={containerRef} id="moto" className="h-[300vh] bg-[#c6c2b6] relative">
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden px-8 md:px-16">
-        
+
         {/* Main Card Wrapper with the Mask applied */}
-        <motion.div 
+        <motion.div
           style={{ WebkitMaskImage: maskImage, maskImage }}
           className="relative group max-w-7xl w-full mx-auto"
         >
           {/* Main content background - NO BACKGROUND */}
           <div className="relative bg-transparent py-16 px-8 md:py-24 md:px-16 flex flex-col items-center justify-center text-center overflow-hidden z-10">
-            
+
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[150%] h-[500px] bg-gradient-to-b from-white/20 to-transparent opacity-60 blur-3xl rounded-[100%] pointer-events-none"></div>
 
             <p className="text-black/50 tracking-widest uppercase font-bold text-sm md:text-lg mb-6 relative z-10">
               The Moto
             </p>
-            
+
             <h2 className="text-5xl sm:text-7xl lg:text-[100px] font-extrabold text-black/90 tracking-tighter leading-[1.05] mb-8 relative z-10 w-full max-w-5xl">
               "Where winning is everything"
             </h2>
-            
+
             <div className="w-24 h-1 bg-gradient-to-r from-transparent via-black/30 to-transparent rounded-full mb-12 relative z-10"></div>
-            
+
             <p className="text-black/70 text-lg sm:text-2xl font-medium max-w-4xl leading-relaxed relative z-10">
               We don't just build software. We craft elite digital experiences designed to dominate the market and captivate users at first glance. Excellence isn't an option—it's our standard.
             </p>
 
             {/* Fiery Burn Edge Overlay */}
-            <motion.div 
-              style={{ backgroundImage: burnEdge }} 
+            <motion.div
+              style={{ backgroundImage: burnEdge }}
               className="absolute inset-0 z-50 pointer-events-none mix-blend-screen opacity-90 blur-[2px]"
             ></motion.div>
           </div>

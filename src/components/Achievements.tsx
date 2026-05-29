@@ -31,7 +31,7 @@ export default function Achievements() {
   const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
 
   return (
-    <section id="achievements" className="bg-[#c6c2b6] pt-24 pb-32 px-8 relative overflow-hidden w-full">
+    <section id="achievements" className="bg-[#c6c2b6] pt-24 pb-0 px-8 relative overflow-hidden w-full">
       <div className="max-w-[1200px] mx-auto w-full relative">
         <motion.div 
           ref={headerRef} 

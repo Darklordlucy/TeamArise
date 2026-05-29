@@ -113,9 +113,13 @@ export default function CanvasScroll() {
           <canvas ref={canvasRef} className="w-full h-full block" />
           
           {/* Bottom Right Content */}
-          <div className="absolute bottom-8 right-8 z-50 flex flex-col items-end text-right">
-            <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-black/90">Team Arise</h1>
-            <p className="text-lg md:text-xl font-medium text-black/60 mt-1">" Where winning is everything"</p>
+          <div className="absolute bottom-12 right-12 z-50 w-1/2 flex flex-col items-end text-right">
+            <h1 className="text-7xl md:text-[100px] lg:text-[130px] font-extrabold tracking-tighter text-black/90 leading-[0.9]">
+              Team Arise
+            </h1>
+            <p className="text-2xl md:text-4xl font-medium text-black/60 mt-4 tracking-tight">
+              " Where winning is everything"
+            </p>
           </div>
         </div>
       )}

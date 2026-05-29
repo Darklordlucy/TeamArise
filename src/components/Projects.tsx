@@ -42,15 +42,15 @@ export default function Projects() {
 
   return (
     <section ref={containerRef} id="projects" className="relative bg-[#c6c2b6] pb-[10vh]">
-      <div className="pt-8 pb-4 relative z-0 px-8 w-full flex flex-col md:flex-row justify-between items-end gap-8">
+      <div className="pt-24 pb-4 relative z-0 px-8 w-full flex flex-col md:flex-row justify-between items-center gap-8">
         <div className="text-left">
           <p className="text-lg font-semibold tracking-widest text-black/60 mb-4 uppercase">Our Work</p>
           <h2 className="text-7xl md:text-[130px] lg:text-[160px] font-extrabold tracking-tighter text-black/90 leading-none">
             Projects
           </h2>
         </div>
-        <div className="text-left md:text-right max-w-xl md:pb-6">
-          <p className="text-xl md:text-2xl text-black/60 font-medium leading-relaxed">
+        <div className="text-center max-w-4xl flex flex-col justify-center">
+          <p className="text-2xl md:text-3xl text-black/60 font-medium leading-relaxed">
             A curated selection of our finest engineering and design achievements. Each project is built for massive scale and crafted with obsessive precision.
           </p>
         </div>
