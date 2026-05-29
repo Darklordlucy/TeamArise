@@ -100,7 +100,7 @@ export default function CanvasScroll() {
   }, [imagesLoaded, images, frameIndex]);
 
   return (
-    <div ref={containerRef} className={`${imagesLoaded ? 'h-[400vh]' : 'h-screen'} relative bg-[#c6c2b6]`}>
+    <div id="home" ref={containerRef} className={`${imagesLoaded ? 'h-[400vh]' : 'h-screen'} relative bg-[#c6c2b6]`}>
       {!imagesLoaded ? (
         <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center bg-[#c6c2b6] z-50">
           <div className="w-16 h-16 border-4 border-black/10 border-t-black/90 rounded-full animate-spin"></div>
