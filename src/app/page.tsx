@@ -3,6 +3,7 @@ import CanvasScroll from "@/components/CanvasScroll";
 import Team from "@/components/Team";
 import Achievements from "@/components/Achievements";
 import Projects from "@/components/Projects";
+import Moto from "@/components/Moto";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
       <Team />
       <Achievements />
       <Projects />
+      <Moto />
     </main>
   );
 }
