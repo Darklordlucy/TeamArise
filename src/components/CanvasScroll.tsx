@@ -63,14 +63,14 @@ export default function CanvasScroll() {
       const img = images[idx];
       if (img && context) {
         context.clearRect(0, 0, canvas.width, canvas.height);
-        
+
         // cover fit logic
         const hRatio = canvas.width / img.width;
         const vRatio = canvas.height / img.height;
         const ratio = Math.max(hRatio, vRatio);
         const centerShift_x = (canvas.width - img.width * ratio) / 2;
         const centerShift_y = (canvas.height - img.height * ratio) / 2;
-        
+
         context.drawImage(img, 0, 0, img.width, img.height,
           centerShift_x, centerShift_y, img.width * ratio, img.height * ratio);
       }
@@ -111,15 +111,15 @@ export default function CanvasScroll() {
       ) : (
         <div className="sticky top-0 h-screen w-full overflow-hidden">
           <canvas ref={canvasRef} className="w-full h-full block" />
-          
-          {/* Bottom Right Content */}
-          <div className="absolute bottom-12 right-12 z-50 w-1/2 flex flex-col items-end text-right">
-            <h1 className="text-7xl md:text-[100px] lg:text-[130px] font-extrabold tracking-tighter text-black/90 leading-[0.9]">
-              Team<br />Arise
+
+          {/* Left & Right Text Overlay */}
+          <div className="absolute top-[30vh] left-1/2 -translate-x-1/2 w-full max-w-5xl px-8 z-50 flex justify-between pointer-events-none">
+            <h1 className="text-7xl md:text-[100px] lg:text-[150px] font-extrabold tracking-tighter text-black/90 leading-none">
+              Team
             </h1>
-            <p className="text-2xl md:text-4xl font-medium text-black/60 mt-4 tracking-tight">
-              " Where winning is everything"
-            </p>
+            <h1 className="text-7xl md:text-[100px] lg:text-[150px] font-extrabold tracking-tighter text-black/90 leading-none">
+              Arise
+            </h1>
           </div>
         </div>
       )}
