@@ -26,32 +26,41 @@ export default function CanvasScroll() {
   const frameIndex = useTransform(smoothProgress, [0, 1], [0, FRAME_COUNT - 1]);
 
   useEffect(() => {
-    // Preload all images
-    const loadImages = async () => {
-      const loadedImages: HTMLImageElement[] = [];
+    const loadImages = () => {
+      // Create a fixed-size array to hold images as they load
+      const loadedImages: HTMLImageElement[] = new Array(FRAME_COUNT);
       let loadedCount = 0;
+      let hasUnblocked = false;
 
-      for (let i = 0; i < FRAME_COUNT; i++) {
+      setImages(loadedImages); // Set reference immediately
+
+      // Dispatch all image load requests concurrently (parallel loading)
+      Array.from({ length: FRAME_COUNT }).forEach((_, i) => {
         const img = new Image();
         const frameNum = String(i + 1).padStart(3, '0');
         img.src = `/frames/ezgif-frame-${frameNum}.jpg`;
-        await new Promise((resolve) => {
-          img.onload = () => {
-            loadedCount++;
-            setLoadProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
-            resolve(null);
-          };
-          img.onerror = () => {
-            // Handle error, just skip or resolve to keep going
-            loadedCount++;
-            setLoadProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
-            resolve(null);
-          };
-        });
-        loadedImages.push(img);
-      }
-      setImages(loadedImages);
-      setImagesLoaded(true);
+        
+        img.onload = () => {
+          loadedImages[i] = img;
+          loadedCount++;
+          setLoadProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
+          
+          // Unblock the UI as soon as the first frame is ready
+          if (loadedImages[0] && !hasUnblocked) {
+            hasUnblocked = true;
+            setImagesLoaded(true);
+          }
+        };
+        
+        img.onerror = () => {
+          loadedCount++;
+          setLoadProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
+          if (i === 0 && !hasUnblocked) {
+            hasUnblocked = true;
+            setImagesLoaded(true);
+          }
+        };
+      });
     };
 
     loadImages();
@@ -66,7 +75,19 @@ export default function CanvasScroll() {
 
     const renderFrame = (index: number) => {
       const idx = Math.min(FRAME_COUNT - 1, Math.max(0, Math.floor(index)));
-      const img = images[idx];
+      let img = images[idx];
+      
+      // Fallback: If current frame isn't loaded yet due to fast scrolling, 
+      // find the most recent loaded frame so the canvas doesn't flash empty.
+      if (!img) {
+        for (let i = idx; i >= 0; i--) {
+          if (images[i]) {
+            img = images[i];
+            break;
+          }
+        }
+      }
+
       if (img && context) {
         context.clearRect(0, 0, canvas.width, canvas.height);
 
