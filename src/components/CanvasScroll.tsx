@@ -113,8 +113,8 @@ export default function CanvasScroll() {
           <canvas ref={canvasRef} className="w-full h-full block" />
 
           {/* Left & Right Text Overlay */}
-          <div className="absolute top-[30vh] left-1/2 -translate-x-1/2 w-full max-w-5xl px-8 z-50 flex justify-between pointer-events-none">
-            <h1 className="text-7xl md:text-[100px] lg:text-[150px] font-extrabold tracking-tighter text-black/90 leading-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-7xl px-8 z-50 flex justify-between pointer-events-none">
+            <h1 className="text-7xl md:text-[100px] lg:text-[150px] font-extrabold tracking-tighter text-black/90 leading-none -ml-6 md:-ml-12">
               Team
             </h1>
             <h1 className="text-7xl md:text-[100px] lg:text-[150px] font-extrabold tracking-tighter text-black/90 leading-none">
