@@ -26,23 +26,13 @@ const teamMembers = [
   },
   {
     id: 3,
-    name: "Aadesh Singh",
-    role: "ML engineer",
-    description: "Expert in deep learning, neural networks, and RAG.",
-    image: "/team/Aadesh Singh.png",
-    skills: ["Supervised learning", "UnSupervised learning", "ANN", "CNN", "RAG"],
-    github: "https://github.com/Aadeshsingh-11",
-    linkedin: "https://www.linkedin.com/in/aadeshsingh11/"
+    name: "---",
+    role: "----",
   },
   {
     id: 4,
-    name: "Anushka Prayagkar",
-    role: "Web designer",
-    description: "Crafting beautiful UI and integrating APIs efficiently.",
-    image: "/team/Anushka Prayagkar.png",
-    skills: ["Javascript", "react", "Figma", "API Integration"],
-    github: "https://github.com/Anushka-prayagkar",
-    linkedin: "https://www.linkedin.com/in/anushka-prayagkar/"
+    name: "---",
+    role: "---",
   }
 ];
 
@@ -81,8 +71,10 @@ function TeamCard({ member }: { member: any }) {
 
           {/* Image (Right) */}
           <div className="w-full sm:w-[240px] h-[180px] overflow-hidden rounded-2xl relative flex-shrink-0 bg-white/5">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={member.image} alt={member.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            {member.image && (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img src={member.image} alt={member.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            )}
           </div>
         </div>
 
@@ -93,7 +85,7 @@ function TeamCard({ member }: { member: any }) {
         >
           <h3 className="text-2xl font-medium mb-4 tracking-tight text-white/90">Tech Stack</h3>
           <ul className="flex flex-wrap justify-center gap-2">
-            {member.skills.map((skill: string, index: number) => (
+            {member.skills?.map((skill: string, index: number) => (
               <li key={index} className="text-sm font-medium text-white/70 bg-white/10 px-3 py-1.5 rounded-full">
                 {skill}
               </li>
