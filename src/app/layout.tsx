@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description: "High-end cinematic scrollytelling site for TeamArise.",
 };
 
+import SmoothScrolling from "@/components/SmoothScrolling";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -18,8 +20,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`h-full antialiased ${inter.variable}`}>
       <body className="min-h-full flex flex-col relative">
-        <Navbar />
-        {children}
+        <SmoothScrolling>
+          <Navbar />
+          {children}
+        </SmoothScrolling>
       </body>
     </html>
   );

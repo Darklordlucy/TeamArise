@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { useScroll, useTransform, useSpring, motion } from 'framer-motion';
+import { useScroll, useTransform, motion } from 'framer-motion';
 
 const FRAME_COUNT = 271;
 
@@ -17,13 +17,7 @@ export default function CanvasScroll() {
     offset: ["start start", "end end"]
   });
 
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
-
-  const frameIndex = useTransform(smoothProgress, [0, 1], [0, FRAME_COUNT - 1]);
+  const frameIndex = useTransform(scrollYProgress, [0, 1], [0, FRAME_COUNT - 1]);
 
   useEffect(() => {
     let active = true;
@@ -133,24 +127,45 @@ export default function CanvasScroll() {
       }
 
       if (img && context) {
-        context.clearRect(0, 0, canvas.width, canvas.height);
+        // Use client width/height which represents CSS pixels
+        const canvasW = canvas.clientWidth;
+        const canvasH = canvas.clientHeight;
+
+        context.clearRect(0, 0, canvasW, canvasH);
 
         // cover fit logic
-        const hRatio = canvas.width / img.width;
-        const vRatio = canvas.height / img.height;
+        const hRatio = canvasW / img.width;
+        const vRatio = canvasH / img.height;
         const ratio = Math.max(hRatio, vRatio);
-        const centerShift_x = (canvas.width - img.width * ratio) / 2;
-        const centerShift_y = (canvas.height - img.height * ratio) / 2;
+        const centerShift_x = (canvasW - img.width * ratio) / 2;
+        const centerShift_y = (canvasH - img.height * ratio) / 2;
 
-        context.drawImage(img, 0, 0, img.width, img.height,
-          centerShift_x, centerShift_y, img.width * ratio, img.height * ratio);
+        context.drawImage(
+          img, 
+          0, 
+          0, 
+          img.width, 
+          img.height,
+          Math.floor(centerShift_x), 
+          Math.floor(centerShift_y), 
+          Math.floor(img.width * ratio), 
+          Math.floor(img.height * ratio)
+        );
       }
     };
 
-    // Resize canvas to match screen
+    // Resize canvas to match screen and scale by DPR
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const rect = canvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      
+      if (context) {
+        context.scale(dpr, dpr);
+      }
+      
       renderFrame(frameIndex.get());
     };
 
