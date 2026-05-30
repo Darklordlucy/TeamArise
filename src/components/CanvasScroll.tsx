@@ -120,7 +120,7 @@ export default function CanvasScroll() {
     const renderFrame = (index: number) => {
       const idx = Math.min(FRAME_COUNT - 1, Math.max(0, Math.floor(index)));
       let img = images[idx];
-      
+
       // Fallback: If current frame isn't loaded yet due to fast scrolling, 
       // find the most recent loaded frame so the canvas doesn't flash empty.
       if (!img) {
@@ -181,16 +181,27 @@ export default function CanvasScroll() {
         </div>
       ) : (
         <div className="sticky top-0 h-screen w-full overflow-hidden">
-          <canvas ref={canvasRef} className="w-full h-full block" />
+          {/* Background Text */}
+          <div className="absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center z-0 pointer-events-none">
+            <h1 className="text-[16vw] font-serif font-bold tracking-tighter text-[#1a1a1a] leading-none whitespace-nowrap flex justify-center gap-[8vw] md:gap-[12vw]">
+              <span>Team</span>
+              <span>Arise</span>
+            </h1>
+          </div>
 
-          {/* Left & Right Text Overlay */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-7xl px-8 z-50 flex justify-between pointer-events-none">
-            <h1 className="text-7xl md:text-[100px] lg:text-[150px] font-extrabold tracking-normal text-black/90 leading-none -ml-6 md:-ml-12">
-              Team
-            </h1>
-            <h1 className="text-7xl md:text-[100px] lg:text-[150px] font-extrabold tracking-normal text-black/90 leading-none">
-              Arise
-            </h1>
+          <canvas ref={canvasRef} className="w-full h-full block relative z-10 mix-blend-multiply" />
+
+          {/* Bottom Labels */}
+          <div className="absolute bottom-8 left-0 w-full px-6 md:px-12 z-50 flex justify-between items-end pointer-events-none">
+            <div className="flex flex-col gap-1 text-black">
+              <span className="text-xs md:text-sm font-medium opacity-100">THIS IS </span>
+              <span className="text-sm md:text-base font-bold tracking-wide">NOT JUST A TEAM</span>
+            </div>
+            <div className="flex gap-4 md:gap-8 text-xs md:text-sm font-bold tracking-widest text-black pointer-events-auto">
+              <a href="#" className="hover:opacity-50 transition-opacity">THINK</a>
+              <a href="#" className="hover:opacity-50 transition-opacity">BUILD</a>
+              <a href="#" className="hover:opacity-50 transition-opacity">PRESENT</a>
+            </div>
           </div>
         </div>
       )}

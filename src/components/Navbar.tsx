@@ -26,7 +26,7 @@ export default function Navbar() {
       {/* Brand Name */}
       <div className="flex items-center">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/logo.png" alt="Team Arise Logo" className="h-[60px] md:h-[80px] w-auto object-contain" />
+        <img src="/logo.png" alt="Team Arise Logo" className="h-[60px] md:h-[60px] w-auto object-contain" />
       </div>
 
       {/* Glass Navbar */}
