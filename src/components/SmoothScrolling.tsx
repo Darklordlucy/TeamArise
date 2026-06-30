@@ -19,7 +19,7 @@ export default function SmoothScrolling({ children }: SmoothScrollingProps) {
         // syncTouch: true, 
       }}
     >
-      {children}
+      {children as any}
     </ReactLenis>
   );
 }
